@@ -43,6 +43,8 @@ export default function DashboardPage() {
   showNotams={showNotams}
   setSelectedIntel={setSelectedIntel}
   flyToTarget={flyToTarget}
+  selectedIntel={selectedIntel}
+
 />
           {/* TACTICAL LEGEND */}
 <div className="absolute right-4 bottom-24 z-50 bg-black border border-zinc-800 p-3 text-xs space-y-2">

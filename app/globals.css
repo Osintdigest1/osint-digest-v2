@@ -34,3 +34,41 @@ body {
 
   filter: brightness(1.4);
 }
+@keyframes radarPulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.9;
+  }
+
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+.radar-pulse {
+  position: absolute;
+
+  width: 24px;
+  height: 24px;
+
+  border-radius: 9999px;
+
+  animation: radarPulse 1.8s infinite;
+}
+
+.radar-blue {
+  border: 2px solid #00b4ff;
+}
+
+.radar-red {
+  border: 2px solid #ff3b30;
+}
+
+.radar-orange {
+  border: 2px solid #ff9500;
+}
+
+.radar-green {
+  border: 2px solid #00ff88;
+}
