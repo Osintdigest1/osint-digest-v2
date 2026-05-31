@@ -1,27 +1,25 @@
 "use client";
 
 import { useState } from "react";
-
-const items = [
-  "USS Nimitz",
-  "INS Vikrant",
-  "Missile Launch",
-  "Bengaluru NOTAM",
-];
+import { searchItems } from "@/lib/searchItems";
 
 type SearchPanelProps = {
   open: boolean;
+  onSelect: (item: any) => void;
 };
 
 export default function SearchPanel({
   open,
+  onSelect,
 }: SearchPanelProps) {
   const [query, setQuery] = useState("");
 
   if (!open) return null;
 
-  const filtered = items.filter((item) =>
-    item.toLowerCase().includes(query.toLowerCase())
+  const filtered = searchItems.filter((item) =>
+    item.title
+      .toLowerCase()
+      .includes(query.toLowerCase())
   );
 
   return (
@@ -38,7 +36,7 @@ export default function SearchPanel({
           onChange={(e) =>
             setQuery(e.target.value)
           }
-          placeholder="Search carriers, events, NOTAMs..."
+          placeholder="Search assets..."
           className="w-full bg-zinc-900 border border-zinc-700 p-2 outline-none"
         />
       </div>
@@ -46,10 +44,13 @@ export default function SearchPanel({
       <div className="max-h-96 overflow-y-auto">
         {filtered.map((item) => (
           <div
-            key={item}
+            key={item.title}
+            onClick={() =>
+              onSelect(item)
+            }
             className="p-3 border-t border-zinc-800 hover:bg-zinc-900 cursor-pointer"
           >
-            {item}
+            {item.title}
           </div>
         ))}
       </div>

@@ -19,6 +19,8 @@ export default function DashboardPage() {
   const [showCarriers, setShowCarriers] = useState(true);
   const [showConflicts, setShowConflicts] = useState(true);
   const [showNotams, setShowNotams] = useState(true);
+  const [flyToTarget, setFlyToTarget] =
+  useState<any>(null);
 
   return (
     <main className="h-screen bg-black text-white flex flex-col overflow-hidden">
@@ -35,19 +37,56 @@ export default function DashboardPage() {
       <div className="flex flex-1 relative overflow-hidden">
         <div className="flex-1">
           <TacticalMap
-            showEvents={showEvents}
-            showCarriers={showCarriers}
-            showConflicts={showConflicts}
-            showNotams={showNotams}
-            setSelectedIntel={setSelectedIntel}
-          />
+  showEvents={showEvents}
+  showCarriers={showCarriers}
+  showConflicts={showConflicts}
+  showNotams={showNotams}
+  setSelectedIntel={setSelectedIntel}
+  flyToTarget={flyToTarget}
+/>
+          {/* TACTICAL LEGEND */}
+<div className="absolute right-4 bottom-24 z-50 bg-black border border-zinc-800 p-3 text-xs space-y-2">
+  <div className="flex items-center gap-2">
+    <span className="text-red-500">●</span>
+    <span>Conflict Zone</span>
+  </div>
+
+  <div className="flex items-center gap-2">
+    <span className="text-yellow-500">●</span>
+    <span>Event</span>
+  </div>
+
+  <div className="flex items-center gap-2">
+    <span className="text-cyan-400">●</span>
+    <span>Carrier</span>
+  </div>
+
+  <div className="flex items-center gap-2">
+    <span className="text-green-400">✈</span>
+    <span>NOTAM</span>
+  </div>
+</div>
         </div>
 
         <IntelPanel
           selectedIntel={selectedIntel}
         />
 
-        <SearchPanel open={showSearch} />
+        <SearchPanel
+  open={showSearch}
+  onSelect={(item) => {
+    setFlyToTarget(item);
+
+    setSelectedIntel({
+      type: item.type,
+      title: item.title,
+      lat: item.lat,
+      lng: item.lng,
+    });
+
+    setShowSearch(false);
+  }}
+/>
 
         <TimelinePanel open={showTimeline} />
 

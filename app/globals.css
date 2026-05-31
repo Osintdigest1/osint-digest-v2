@@ -24,3 +24,13 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+.selected-asset {
+  outline: 3px solid white;
+  outline-offset: 2px;
+
+  box-shadow:
+    0 0 15px white,
+    0 0 30px #00b4ff;
+
+  filter: brightness(1.4);
+}

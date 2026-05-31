@@ -42,14 +42,26 @@ export default function TacticalMap({
       new maplibregl.NavigationControl()
     );
 
+    const clearSelection = () => {
+      document
+        .querySelectorAll(".selected-asset")
+        .forEach((el) =>
+          el.classList.remove("selected-asset")
+        );
+    };
+
     map.on("load", () => {
+      // =====================
+      // CONFLICTS
+      // =====================
+
       if (showConflicts) {
         conflicts.forEach((conflict) => {
           const el =
             document.createElement("div");
 
-          el.style.width = "40px";
-          el.style.height = "40px";
+          el.style.width = "28px";
+          el.style.height = "28px";
           el.style.background =
             "rgba(255,0,0,0.25)";
           el.style.border =
@@ -57,13 +69,20 @@ export default function TacticalMap({
           el.style.borderRadius = "50%";
           el.style.cursor = "pointer";
 
-          el.onclick = () =>
+          el.onclick = () => {
+            clearSelection();
+
+            el.classList.add(
+              "selected-asset"
+            );
+
             setSelectedIntel({
               type: "Conflict Zone",
               title: conflict.name,
               lat: conflict.lat,
               lng: conflict.lng,
             });
+          };
 
           new maplibregl.Marker({
             element: el,
@@ -76,40 +95,68 @@ export default function TacticalMap({
         });
       }
 
-      if (showEvents) {
-        events.forEach((event) => {
-          const marker =
-            new maplibregl.Marker({
-              color:
-                event.severity === "critical"
-                  ? "#ff3b30"
-                  : event.severity === "high"
-                  ? "#ff9500"
-                  : "#ffd60a",
-            })
-              .setLngLat([
-                event.lng,
-                event.lat,
-              ])
-              .addTo(map);
+      // =====================
+      // EVENTS
+      // =====================
 
-          marker
-            .getElement()
-            .addEventListener(
-              "click",
-              () => {
-                setSelectedIntel({
-                  type: "Event",
-                  title: event.title,
-                  severity:
-                    event.severity,
-                  lat: event.lat,
-                  lng: event.lng,
-                });
-              }
-            );
-        });
-      }
+      // =====================
+// EVENTS
+// =====================
+
+if (showEvents) {
+  events.forEach((event) => {
+    const el =
+      document.createElement("div");
+
+    el.style.width = "18px";
+    el.style.height = "18px";
+    el.style.borderRadius = "50%";
+    el.style.cursor = "pointer";
+
+    el.style.background =
+      event.severity === "critical"
+        ? "#ff3b30"
+        : event.severity === "high"
+        ? "#ff9500"
+        : "#ffd60a";
+
+    el.style.boxShadow =
+      event.severity === "critical"
+        ? "0 0 10px #ff3b30"
+        : event.severity === "high"
+        ? "0 0 10px #ff9500"
+        : "0 0 10px #ffd60a";
+
+    el.onclick = () => {
+      clearSelection();
+
+      el.classList.add(
+        "selected-asset"
+      );
+
+      setSelectedIntel({
+        type: "Event",
+        title: event.title,
+        severity: event.severity,
+        lat: event.lat,
+        lng: event.lng,
+      });
+    };
+
+    new maplibregl.Marker({
+      element: el,
+    })
+      .setLngLat([
+        event.lng,
+        event.lat,
+      ])
+      .addTo(map);
+  });
+}
+
+      // =====================
+      // CARRIERS
+      // =====================
 
       if (showCarriers) {
         carriers.forEach((carrier) => {
@@ -128,13 +175,20 @@ export default function TacticalMap({
             "0 0 10px #00b4ff";
           el.style.cursor = "pointer";
 
-          el.onclick = () =>
+          el.onclick = () => {
+            clearSelection();
+
+            el.classList.add(
+              "selected-asset"
+            );
+
             setSelectedIntel({
               type: "Carrier",
               title: carrier.name,
               lat: carrier.lat,
               lng: carrier.lng,
             });
+          };
 
           new maplibregl.Marker({
             element: el,
@@ -147,24 +201,36 @@ export default function TacticalMap({
         });
       }
 
+      // =====================
+      // NOTAMS
+      // =====================
+
       if (showNotams) {
         notams.forEach((notam) => {
           const el =
             document.createElement("div");
 
           el.innerHTML = "✈";
+
           el.style.color =
             "#00ff88";
           el.style.fontSize = "20px";
           el.style.cursor = "pointer";
 
-          el.onclick = () =>
+          el.onclick = () => {
+            clearSelection();
+
+            el.classList.add(
+              "selected-asset"
+            );
+
             setSelectedIntel({
               type: "NOTAM",
               title: notam.title,
               lat: notam.lat,
               lng: notam.lng,
             });
+          };
 
           new maplibregl.Marker({
             element: el,
