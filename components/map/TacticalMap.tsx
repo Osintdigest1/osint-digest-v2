@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import maplibregl from "maplibre-gl";
 
 import "maplibre-gl/dist/maplibre-gl.css";
@@ -35,7 +35,11 @@ export default function TacticalMap({
 
   const mapRef =
     useRef<maplibregl.Map | null>(null);
-
+const [pulsePosition, setPulsePosition] =
+  useState({
+    x: 0,
+    y: 0,
+  });
   useEffect(() => {
     if (!mapContainer.current) return;
 
@@ -292,7 +296,40 @@ export default function TacticalMap({
       offset: [-200, 0],
     });
   }, [flyToTarget]);
+useEffect(() => {
+  if (
+    !selectedIntel ||
+    !mapRef.current
+  )
+    return;
 
+  const updatePulse = () => {
+    const point =
+      mapRef.current!.project([
+        selectedIntel.lng,
+        selectedIntel.lat,
+      ]);
+
+    setPulsePosition({
+      x: point.x,
+      y: point.y,
+    });
+  };
+
+  updatePulse();
+
+  mapRef.current.on(
+    "move",
+    updatePulse
+  );
+
+  return () => {
+    mapRef.current?.off(
+      "move",
+      updatePulse
+    );
+  };
+}, [selectedIntel]);
   return (
   <div className="relative w-full h-full">
     <div
@@ -301,10 +338,18 @@ export default function TacticalMap({
     />
 
     {selectedIntel && (
-      <div className="absolute left-1/2 top-1/2 pointer-events-none">
-        <RadarPulse />
-      </div>
-    )}
+  <div
+    className="absolute pointer-events-none"
+    style={{
+      left: pulsePosition.x,
+      top: pulsePosition.y,
+      transform:
+        "translate(-50%, -50%)",
+    }}
+  >
+    <RadarPulse />
+  </div>
+)}
   </div>
 );
 }

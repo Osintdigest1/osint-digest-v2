@@ -72,3 +72,18 @@ body {
 .radar-green {
   border: 2px solid #00ff88;
 }
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee {
+  display: inline-block;
+  min-width: 100%;
+  animation: marquee 25s linear infinite;
+}

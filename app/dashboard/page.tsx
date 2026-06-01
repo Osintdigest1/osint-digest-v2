@@ -6,6 +6,7 @@ import TacticalMap from "@/components/map/TacticalMap";
 import IntelPanel from "@/components/panels/IntelPanel";
 import SearchPanel from "@/components/panels/SearchPanel";
 import TimelinePanel from "@/components/panels/TimelinePanel";
+import AlertTicker from "@/components/ticker/AlertTicker";
 
 export default function DashboardPage() {
   const [showLayers, setShowLayers] = useState(false);
@@ -26,11 +27,7 @@ export default function DashboardPage() {
     <main className="h-screen bg-black text-white flex flex-col overflow-hidden">
       {/* TOP BAR */}
       <div className="h-12 border-b border-zinc-800 flex items-center px-4 gap-6 text-sm shrink-0">
-        <span>LIVE INTEL</span>
-        <span>ALERTS</span>
-        <span>CARRIERS</span>
-        <span>INDIA NOTAM</span>
-        <span>WATCHLIST</span>
+        <AlertTicker />
       </div>
 
       {/* MAP AREA */}
