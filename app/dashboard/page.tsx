@@ -7,7 +7,9 @@ import IntelPanel from "@/components/panels/IntelPanel";
 import SearchPanel from "@/components/panels/SearchPanel";
 import TimelinePanel from "@/components/panels/TimelinePanel";
 import AlertTicker from "@/components/ticker/AlertTicker";
-
+import UtcClock from "@/components/header/UtcClock";
+import SystemStatus from "@/components/header/SystemStatus";
+import TopTicker from "@/components/TopTicker";
 export default function DashboardPage() {
   const [showLayers, setShowLayers] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
@@ -26,9 +28,27 @@ export default function DashboardPage() {
   return (
     <main className="h-screen bg-black text-white flex flex-col overflow-hidden">
       {/* TOP BAR */}
-      <div className="h-12 border-b border-zinc-800 flex items-center px-4 gap-6 text-sm shrink-0">
-        <AlertTicker />
-      </div>
+<div className="h-12 border-b border-zinc-800 flex items-center px-4 shrink-0">
+
+  <div className="flex items-center gap-6 text-xs shrink-0">
+    <span className="font-bold text-cyan-400">
+      OSINT.DIGEST V2
+    </span>
+
+    <UtcClock />
+
+    <SystemStatus />
+
+    <span>EVENTS: 12</span>
+    <span>CARRIERS: 7</span>
+    <span>NOTAMS: 19</span>
+  </div>
+
+  <div className="flex-1 overflow-hidden ml-8">
+    <TopTicker />
+  </div>
+
+</div>
 
       {/* MAP AREA */}
       <div className="flex flex-1 relative overflow-hidden">

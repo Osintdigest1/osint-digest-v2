@@ -11,6 +11,7 @@ import { conflicts } from "@/lib/conflicts";
 import { notams } from "@/lib/notams";
 import RadarPulse from "@/components/map/RadarPulse";
 
+
 type TacticalMapProps = {
   showEvents: boolean;
   showCarriers: boolean;
@@ -52,6 +53,7 @@ const [pulsePosition, setPulsePosition] =
     });
 
     mapRef.current = map;
+    (window as any).map = map;
 
     map.addControl(
       new maplibregl.NavigationControl()
@@ -68,6 +70,33 @@ const [pulsePosition, setPulsePosition] =
     };
 
     map.on("load", () => {
+      map.addSource("india-border", {
+  type: "geojson",
+  data: "/maps/india-border.geojson",
+});
+
+map.addLayer({
+  id: "india-border-glow",
+  type: "line",
+  source: "india-border",
+  paint: {
+    "line-color": "#838992",
+    "line-width": 2,
+    "line-blur": 1,
+    "line-opacity": 0.08,
+  },
+});
+
+map.addLayer({
+  id: "india-border-main",
+  type: "line",
+  source: "india-border",
+  paint: {
+    "line-color": "#8f98a3",
+    "line-width": 0.7,
+    "line-opacity": 0.65,
+  },
+});
       // =====================
       // CONFLICTS
       // =====================
@@ -178,20 +207,16 @@ const [pulsePosition, setPulsePosition] =
                 "div"
               );
 
-            el.style.width =
-              "20px";
-            el.style.height =
-              "20px";
-            el.style.background =
-              "#00b4ff";
-            el.style.border =
-              "2px solid white";
-            el.style.borderRadius =
-              "50%";
-            el.style.boxShadow =
-              "0 0 10px #00b4ff";
-            el.style.cursor =
-              "pointer";
+            el.innerHTML = "⚓";
+el.style.width = "10px";
+el.style.height = "10px";
+
+el.style.background = "#00b4ff";
+
+el.style.borderRadius = "50%";
+
+el.style.boxShadow =
+  "0 0 4px #00b4ff";
 
             el.onclick = () => {
               clearSelection();
@@ -201,12 +226,16 @@ const [pulsePosition, setPulsePosition] =
               );
 
               setSelectedIntel({
-                type: "Carrier",
-                title:
-                  carrier.name,
-                lat: carrier.lat,
-                lng: carrier.lng,
-              });
+  type: "Carrier",
+  title: carrier.name,
+  class: carrier.class,
+  country: carrier.country,
+  region: carrier.region,
+  status: carrier.status,
+  lastUpdate: carrier.lastUpdate,
+  lat: carrier.lat,
+  lng: carrier.lng,
+});
             };
 
             new maplibregl.Marker({

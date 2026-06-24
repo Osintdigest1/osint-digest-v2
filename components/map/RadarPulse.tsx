@@ -11,29 +11,31 @@ export default function RadarPulse({
     <div
       className="relative"
       style={{
-        width: "32px",
-        height: "32px",
+        width: "24px",
+        height: "24px",
       }}
     >
       <div
         className="absolute inset-0 rounded-full animate-ping"
         style={{
-          border: `2px solid ${color}`,
-          opacity: 0.5,
+          border: `1px solid ${color}`,
+          opacity: 0.25,
         }}
       />
 
       <div
         className="absolute rounded-full"
         style={{
-          width: "16px",
-          height: "16px",
+          width: "10px",
+          height: "10px",
           background: color,
-          boxShadow: `0 0 15px ${color}`,
+          boxShadow: `
+            0 0 6px ${color},
+            0 0 12px ${color}
+          `,
           left: "50%",
           top: "50%",
-          transform:
-            "translate(-50%, -50%)",
+          transform: "translate(-50%, -50%)",
         }}
       />
     </div>

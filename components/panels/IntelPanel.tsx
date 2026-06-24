@@ -1,7 +1,7 @@
 type IntelPanelProps = {
   selectedIntel: any;
 };
-
+import IntelFeed from "./IntelFeed";
 export default function IntelPanel({
   selectedIntel,
 }: IntelPanelProps) {
@@ -58,26 +58,69 @@ export default function IntelPanel({
                 </div>
               )}
 
-              <div>
-                <div className="text-xs text-zinc-500">
-                  LATITUDE
-                </div>
-                <div>{selectedIntel.lat}</div>
-              </div>
+              {selectedIntel.type === "Carrier" ? (
+  <>
+    <div>
+      <div className="text-xs text-zinc-500">
+        CLASS
+      </div>
+      <div>{selectedIntel.class}</div>
+    </div>
 
-              <div>
-                <div className="text-xs text-zinc-500">
-                  LONGITUDE
-                </div>
-                <div>{selectedIntel.lng}</div>
-              </div>
+    <div>
+      <div className="text-xs text-zinc-500">
+        COUNTRY
+      </div>
+      <div>{selectedIntel.country}</div>
+    </div>
 
-              <div>
-                <div className="text-xs text-zinc-500">
-                  STATUS
-                </div>
-                <div>ACTIVE</div>
-              </div>
+    <div>
+      <div className="text-xs text-zinc-500">
+        REGION
+      </div>
+      <div>{selectedIntel.region}</div>
+    </div>
+
+    <div>
+      <div className="text-xs text-zinc-500">
+        STATUS
+      </div>
+      <div className="text-green-400">
+        {selectedIntel.status}
+      </div>
+    </div>
+
+    <div>
+      <div className="text-xs text-zinc-500">
+        LAST UPDATE
+      </div>
+      <div>{selectedIntel.lastUpdate}</div>
+    </div>
+  </>
+) : (
+  <>
+    <div>
+      <div className="text-xs text-zinc-500">
+        LATITUDE
+      </div>
+      <div>{selectedIntel.lat}</div>
+    </div>
+
+    <div>
+      <div className="text-xs text-zinc-500">
+        LONGITUDE
+      </div>
+      <div>{selectedIntel.lng}</div>
+    </div>
+
+    <div>
+      <div className="text-xs text-zinc-500">
+        STATUS
+      </div>
+      <div>ACTIVE</div>
+    </div>
+  </>
+)}
 
             </div>
           )}
@@ -85,49 +128,15 @@ export default function IntelPanel({
       </div>
 
       {/* INTEL FEED */}
-      <div>
-        <div className="p-4 border-b border-zinc-800">
-          <div className="text-xs text-zinc-500">
-            LATEST INTEL
-          </div>
-        </div>
+<div>
+  <div className="p-4 border-b border-zinc-800">
+    <div className="text-xs text-zinc-500">
+      LATEST INTEL
+    </div>
+  </div>
 
-        <div className="p-4 border-b border-zinc-800">
-          <div className="text-red-500 text-xs">
-            CRITICAL
-          </div>
-          <div className="font-medium">
-            Missile Launch Detected
-          </div>
-          <div className="text-xs text-zinc-500">
-            2 min ago
-          </div>
-        </div>
-
-        <div className="p-4 border-b border-zinc-800">
-          <div className="text-orange-500 text-xs">
-            HIGH
-          </div>
-          <div className="font-medium">
-            Carrier Group Movement
-          </div>
-          <div className="text-xs text-zinc-500">
-            5 min ago
-          </div>
-        </div>
-
-        <div className="p-4 border-b border-zinc-800">
-          <div className="text-yellow-500 text-xs">
-            MEDIUM
-          </div>
-          <div className="font-medium">
-            Bengaluru NOTAM Active
-          </div>
-          <div className="text-xs text-zinc-500">
-            12 min ago
-          </div>
-        </div>
-      </div>
+  <IntelFeed />
+</div>
 
       {/* WATCHLIST */}
       <div>

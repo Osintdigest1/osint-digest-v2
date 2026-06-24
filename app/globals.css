@@ -25,14 +25,13 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 .selected-asset {
-  outline: 3px solid white;
-  outline-offset: 2px;
+  outline: none;
 
   box-shadow:
-    0 0 15px white,
-    0 0 30px #00b4ff;
+    0 0 6px #00b4ff,
+    0 0 12px #00b4ff;
 
-  filter: brightness(1.4);
+  filter: brightness(1.1);
 }
 @keyframes radarPulse {
   0% {
@@ -74,16 +73,17 @@ body {
 }
 @keyframes marquee {
   0% {
-    transform: translateX(100%);
+    transform: translateX(150%);
   }
 
   100% {
-    transform: translateX(-100%);
+    transform: translateX(-150%);
   }
 }
 
 .animate-marquee {
   display: inline-block;
-  min-width: 100%;
-  animation: marquee 25s linear infinite;
+  white-space: nowrap;
+  animation: marquee 30s linear infinite;
+  padding-left: 150px;
 }
