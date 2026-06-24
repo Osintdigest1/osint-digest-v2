@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { simulatedEvents } from "@/components/panels/simulatedFeed";
 
 export default function useRealtimeFeed() {
-  const [feed, setFeed] = useState([]);
+  const [feed, setFeed] = useState<Record<string, any>[]>([]);
 
   useEffect(() => {
     const timer = setInterval(() => {
