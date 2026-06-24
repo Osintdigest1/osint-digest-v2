@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { simulatedEvents } from "@/lib/simulatedFeed";
+import { simulatedEvents } from "@/components/panels/simulatedFeed";
 
 export default function useRealtimeFeed() {
   const [feed, setFeed] = useState([]);
